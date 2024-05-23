@@ -38,6 +38,8 @@ namespace TestConsoleApp
             var account2 = new Account() { Student = student2, Username = "JohnDoe", Balance = 2000, IsActive = true };
             context.Accounts.AddRange(account1, account2);
 
+            context.SaveChanges();
+
 
         }
     }
