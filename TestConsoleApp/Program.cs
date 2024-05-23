@@ -17,8 +17,7 @@ namespace TestConsoleApp
                 // Add data into Database
                 seed();
             }
-
-            context.Database.Migrate();
+   
 
             Console.Write("Done");
 
@@ -40,7 +39,7 @@ namespace TestConsoleApp
 
             context.SaveChanges();
 
-
+            //not adding info ?
         }
     }
 }
