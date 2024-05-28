@@ -2,6 +2,7 @@
 using PaymentSystem;
 using PaymentSystem.DAL.Models;
 using PaymentSystem.Models;
+using PaymentSystem.DAL;
 
 namespace TestConsoleApp
 {
@@ -9,7 +10,10 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
-            var context = new SystemContext();
+            var options = new DbContextOptionsBuilder<SystemContext>()
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=PaymentServiceDB")
+                .Options;
+            var context = new SystemContext(options);
 
             var created = context.Database.EnsureCreated();
             if (created)
@@ -25,9 +29,8 @@ namespace TestConsoleApp
 
         }
 
-        private static void seed()
+        private static void seed(SystemContext context)
         {
-            var context = new SystemContext();
 
             var student1 = new Student() { Firstname = "Danny", Lastname = "Smith", Username = "DannySmith" };
             var student2 = new Student() { Firstname = "John", Lastname = "Doe", Username = "JohnDoe" };

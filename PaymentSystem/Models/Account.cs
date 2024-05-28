@@ -14,7 +14,8 @@ namespace PaymentSystem.DAL.Models
         public int StudentId { get; set; }
         public Student Student { get; set; } = null!;
         public string Username { get; set; }
-        public float Balance { get; set; }
+        public decimal Balance { get; set; }
         public Boolean IsActive { get; set; }
+        public decimal NumberOfCopies { get; set; }
     }
 }
