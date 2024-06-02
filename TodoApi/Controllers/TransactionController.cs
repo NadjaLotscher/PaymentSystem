@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PaymentSystem;
 using PaymentSystem.DAL;
-using PaymentSystem.DAL.Models;
+using PaymentSystem.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using PaymentSystem;
 
 namespace TodoApi.Controllers
 {
@@ -34,9 +34,16 @@ namespace TodoApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTransaction([FromBody] Transaction transaction)
         {
-            _context.Transactions.Add(transaction);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetTransactions), new { studentId = transaction.StudentId }, transaction);
+            try
+            {
+                _context.Transactions.Add(transaction);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction(nameof(GetTransactions), new { studentId = transaction.StudentId }, transaction);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred while creating the transaction.");
+            }
         }
     }
 }

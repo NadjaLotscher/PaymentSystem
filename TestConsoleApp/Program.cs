@@ -19,7 +19,7 @@ namespace TestConsoleApp
             if (created)
             {
                 // Add data into Database
-                seed();
+                // seed();
             }
    
 

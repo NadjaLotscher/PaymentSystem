@@ -31,9 +31,16 @@ namespace TodoApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateStudent([FromBody] Student student)
         {
-            _context.Students.Add(student);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetStudent), new { id = student.StudentId }, student);
+            try
+            {
+                _context.Students.Add(student);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction(nameof(GetStudent), new { id = student.StudentId }, student);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred while creating the student.");
+            }
         }
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PaymentSystem;
 using PaymentSystem.DAL;
 using PaymentSystem.DAL.Models;
-using System.Linq;
+using PaymentSystem.Models;
 using System.Threading.Tasks;
 
 namespace TodoApi.Controllers
@@ -38,9 +38,28 @@ namespace TodoApi.Controllers
             {
                 return NotFound();
             }
-            account.Balance += request.Amount;
-            await _context.SaveChangesAsync();
-            return Ok(account.Balance);
+
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                account.Balance += request.Amount;
+                _context.Transactions.Add(new Transaction
+                {
+                    StudentId = account.StudentId,
+                    Amount = request.Amount,
+                    TransactionType = "Credit",
+                    TransactionDate = DateTime.Now,
+                    Status = "Success"
+                });
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return Ok(account.Balance);
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                return StatusCode(500, "An error occurred while adding funds.");
+            }
         }
     }
 
