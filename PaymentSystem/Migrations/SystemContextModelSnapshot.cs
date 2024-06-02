@@ -30,11 +30,14 @@ namespace PaymentSystem.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"));
 
-                    b.Property<float>("Balance")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<decimal>("NumberOfCopies")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -48,33 +51,6 @@ namespace PaymentSystem.DAL.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("PaymentSystem.DAL.Models.Quota", b =>
-                {
-                    b.Property<int>("QuotaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuotaId"));
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("EuivalentCHF")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("NumberOfCopies")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("QuotaId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Quotas");
                 });
 
             modelBuilder.Entity("PaymentSystem.Models.Student", b =>
@@ -144,17 +120,6 @@ namespace PaymentSystem.DAL.Migrations
                 });
 
             modelBuilder.Entity("PaymentSystem.DAL.Models.Account", b =>
-                {
-                    b.HasOne("PaymentSystem.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("PaymentSystem.DAL.Models.Quota", b =>
                 {
                     b.HasOne("PaymentSystem.Models.Student", "Student")
                         .WithMany()
