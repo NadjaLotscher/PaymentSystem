@@ -12,10 +12,17 @@ public class HomeController : Controller
         _apiService = apiService;
     }
 
-    public async Task<IActionResult> Index()
+  
+
+    public async Task<IActionResult> Index(string userId)
     {
-        var account = await _apiService.GetAccountBalanceAsync("someUserId");
-        return View(account);
+        if (string.IsNullOrEmpty(userId))
+        {
+            // Handle the case when userId is null or empty
+            return View();
+        }
+        var account = await _apiService.GetAccountBalanceAsync(userId);
+        return View();
     }
 
     [HttpPost]

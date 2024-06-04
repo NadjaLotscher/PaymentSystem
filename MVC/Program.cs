@@ -34,8 +34,19 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    seed(services);
+    var options = new DbContextOptionsBuilder<SystemContext>()
+               .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=PaymentServiceDB")
+               .Options;
+    var context = new SystemContext(options);
+
+    var created = context.Database.EnsureCreated();
+    if (created)
+    {
+        // Add data into Database
+        var services = scope.ServiceProvider;
+        seed(services);
+    }
+    
 }
 
 // Configure the HTTP request pipeline.
@@ -63,10 +74,6 @@ void seed(IServiceProvider serviceProvider)
 {
     using var context = new SystemContext(serviceProvider.GetRequiredService<DbContextOptions<SystemContext>>());
 
-    var created = context.Database.EnsureCreated();
-
-    if (created)
-    {
         var account1 = new Account() { Username = "user1", Balance = 100.0m };
         var account2 = new Account() { Username = "user2", Balance = 150.0m };
         context.Accounts.AddRange(account1, account2);
@@ -80,5 +87,5 @@ void seed(IServiceProvider serviceProvider)
         context.Transactions.AddRange(transaction1, transaction2);
 
         context.SaveChanges();
-    }
+    
 }

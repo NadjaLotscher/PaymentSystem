@@ -12,10 +12,10 @@ public class ApiService
     private readonly HttpClient _httpClient;
     private readonly string _baseUrl;
 
-    public ApiService(HttpClient httpClient, IOptions<MySettingsModel> settings)
+    public ApiService(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
-        _baseUrl = settings.Value.WebApiBaseUrl;
+        _baseUrl = configuration["WebAPI:BaseUrl"];
     }
 
     public async Task<Account> GetAccountBalanceAsync(string userId)
