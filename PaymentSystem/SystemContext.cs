@@ -26,11 +26,6 @@ namespace PaymentSystem
             modelBuilder.Entity<Student>()
                 .HasKey(s => s.StudentId);
 
-            // Populate initial Student data
-            modelBuilder.Entity<Student>().HasData(
-                new Student { StudentId = 1, Lastname = "Lötscher", Firstname = "Nadja", Username = "nadjalotscher" }
-            );
-
             // Configure primary key for Transaction
             modelBuilder.Entity<Transaction>()
                 .HasKey(t => t.TransactionId);
@@ -50,6 +45,7 @@ namespace PaymentSystem
                 .HasOne(a => a.Student) // Each Account has one Student
                 .WithMany() // Specify the collection property in Student if exists
                 .HasForeignKey(a => a.StudentId); // Foreign key in the Account table
+
         }
     }
 }

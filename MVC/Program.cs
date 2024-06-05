@@ -3,8 +3,7 @@ using Microsoft.Extensions.Options;
 using MVC.Models;
 using PaymentSystem;
 using PaymentSystem.DAL;
-using PaymentSystem.DAL.Models;
-using PaymentSystem.Models;
+using PaymentSystem.MVC.Services;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +25,7 @@ builder.Services.Configure<MySettingsModel>(builder.Configuration.GetSection("My
 // Register ApiService for dependency injection
 builder.Services.AddScoped<ApiService>();
 
-// Configure DbContext
+// Configure DbContext for local MVC operations (if needed)
 builder.Services.AddDbContext<SystemContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
