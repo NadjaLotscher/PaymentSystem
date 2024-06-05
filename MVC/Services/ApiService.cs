@@ -7,30 +7,33 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-public class ApiService
+namespace PaymentSystem.MVC.Services
 {
-    private readonly HttpClient _httpClient;
-    private readonly string _baseUrl;
-
-    public ApiService(HttpClient httpClient, IOptions<MySettingsModel> settings)
+    public class ApiService
     {
-        _httpClient = httpClient;
-        _baseUrl = settings.Value.WebApiBaseUrl;
-    }
+        private readonly HttpClient _httpClient;
+        private readonly string _baseUrl;
 
-    public async Task<Account> GetAccountBalanceAsync(string userId)
-    {
-        var response = await _httpClient.GetAsync($"{_baseUrl}account/{userId}");
-        response.EnsureSuccessStatusCode();
-        return JsonSerializer.Deserialize<Account>(await response.Content.ReadAsStringAsync());
-    }
+        public ApiService(HttpClient httpClient, IOptions<MySettingsModel> settings)
+        {
+            _httpClient = httpClient;
+            _baseUrl = settings.Value.WebApiBaseUrl;
+        }
 
-    public async Task<decimal> AddFundsAsync(AddFundsRequest request)
-    {
-        var json = JsonSerializer.Serialize(request);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync($"{_baseUrl}account/addFunds", content);
-        response.EnsureSuccessStatusCode();
-        return JsonSerializer.Deserialize<decimal>(await response.Content.ReadAsStringAsync());
+        public async Task<Account> GetAccountBalanceAsync(string userId)
+        {
+            var response = await _httpClient.GetAsync($"{_baseUrl}account/{userId}");
+            response.EnsureSuccessStatusCode();
+            return JsonSerializer.Deserialize<Account>(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<decimal> AddFundsAsync(AddFundsRequest request)
+        {
+            var json = JsonSerializer.Serialize(request);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync($"{_baseUrl}account/addFunds", content);
+            response.EnsureSuccessStatusCode();
+            return JsonSerializer.Deserialize<decimal>(await response.Content.ReadAsStringAsync());
+        }
     }
 }
