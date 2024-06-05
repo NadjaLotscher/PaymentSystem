@@ -21,10 +21,9 @@ namespace TestConsoleApp
                 // Add data into Database
                 // seed();
             }
-   
+            
 
             Console.Write("Done");
-
 
 
         }

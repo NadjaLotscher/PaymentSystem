@@ -1,8 +1,79 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    @model IEnumerable<MVC.Models.MySettingsModel>
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Account Management</title>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container py-5">
+    <h1 class="text-center mb-4">Student Account Management</h1>
+
+    <div class="card p-4">
+        <h2>Add Student</h2>
+        <form id="add-student-form">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" required class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Student</button>
+        </form>
+    </div>
+
+    <div class="card p-4 mt-4">
+        <h2>Manage Student Account</h2>
+        <div id="account-management">
+            <div class="form-group">
+                <label for="UserID">Student Username :</label>
+                <input type="number" id="UserID" placeholder="Enter student ID" class="form-control">
+            </div>
+
+            <div id="balance-section" style="display: none;">
+                <h3>Account Balance</h3>
+                <p id="balance" class="font-weight-bold">--</p>
+                <button id="add-funds-btn" class="btn btn-secondary">Add Funds</button>
+                <br>
+                <div class="form-group mt-2">
+                    <label for="add-amount">Amount:</label>
+                    <input type="number" id="add-amount" min="0" placeholder="Enter amount" class="form-control">
+                </div>
+                <button id="pay-amount-btn" class="btn btn-secondary">Pay Amount</button>
+                <br>
+                <button id="view-transactions-btn" class="btn btn-secondary mt-2">View Transactions</button>
+            </div>
+
+            <div id="transactions" style="display: none;">
+                <h3>Transaction History</h3>
+                <ul id="transaction-list" class="list-group"></ul>
+                <button id="close-transactions-btn" class="btn btn-secondary mt-2">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- this is so that the page loads faster and the user can interact with the page sooner -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Implement JavaScript logic for form submissions and API calls
+
+        // Add Student Form Submission
+
+    </script>
+</body>
+</html>

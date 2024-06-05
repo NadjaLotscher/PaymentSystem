@@ -9,16 +9,26 @@ using System.Threading.Tasks;
 
 namespace PaymentSystem.MVC.Services
 {
+
     public class ApiService
     {
         private readonly HttpClient _httpClient;
         private readonly string _baseUrl;
-
+  
+       // Use this constructor to be consistent with the Program.cs configuration
         public ApiService(HttpClient httpClient, IOptions<MySettingsModel> settings)
         {
             _httpClient = httpClient;
             _baseUrl = settings.Value.WebApiBaseUrl;
         }
+
+        // Optionally, you could keep this constructor if needed
+        public ApiService(HttpClient httpClient, IConfiguration configuration)
+        {
+            _httpClient = httpClient;
+            _baseUrl = configuration["WebAPI:BaseUrl"];
+        }
+
 
         public async Task<Account> GetAccountBalanceAsync(string userId)
         {
