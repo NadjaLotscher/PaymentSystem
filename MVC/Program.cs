@@ -4,6 +4,7 @@ using MVC.Models;
 using PaymentSystem;
 using PaymentSystem.DAL;
 using PaymentSystem.MVC.Services;
+using PaymentSystem.MVC.DTOs;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,7 +44,7 @@ using (var scope = app.Services.CreateScope())
     {
         // Add data into Database
         var services = scope.ServiceProvider;
-        seed(services);
+        // seed(services);
     }
     
 }
@@ -69,6 +70,7 @@ app.MapControllerRoute(
 
 app.Run();
 
+/*
 void seed(IServiceProvider serviceProvider)
 {
     using var context = new SystemContext(serviceProvider.GetRequiredService<DbContextOptions<SystemContext>>());
@@ -88,3 +90,4 @@ void seed(IServiceProvider serviceProvider)
         context.SaveChanges();
     
 }
+*/
