@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using PaymentSystem.Models;
 using System.Threading.Tasks;
 using MVC.Models;
-using PaymentSystem.MVC.Services;
+using MVC.Services;
 
 public class HomeController : Controller
 {
@@ -13,24 +13,32 @@ public class HomeController : Controller
         _apiService = apiService;
     }
 
-  
-
-    public async Task<IActionResult> Index(string userId)
+    public IActionResult Index()
     {
-        if (string.IsNullOrEmpty(userId))
-        {
-            // Handle the case when userId is null or empty
-            return View();
-        }
-        var account = await _apiService.GetAccountBalanceAsync(userId);
+        //HttpContext.Session.SetString("UserId", "abcdef");
+        return View();
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> AddStudent()
+    {
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddFunds(AddFundsRequest request)
+    public async Task<IActionResult> AddStudent(StudentDTO student)
     {
-        var newBalance = await _apiService.AddFundsAsync(request);
-        ViewBag.NewBalance = newBalance;
-        return View();
+        if (!ModelState.IsValid)
+        {
+            await _apiService.PostStudentDTO(student);
+            return RedirectToAction("Index");
+     
+        }
+        return View(student);
+
+
     }
 }
+
+
+

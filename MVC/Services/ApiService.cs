@@ -30,7 +30,7 @@ namespace MVC.Services
         }
 
         //add methods for all DB entities
-        public async Task<AccountDTO> AddAccountDTO(AccountDTO account)
+        public async Task<AccountDTO> PostAccountDTO(AccountDTO account)
         {
             var restponse = await _httpClient.PostAsJsonAsync(_baseUrl, account);
             if (restponse.IsSuccessStatusCode)
@@ -46,7 +46,7 @@ namespace MVC.Services
 
         }
 
-        public async Task<StudentDTO> AddStudentDTO(StudentDTO student)
+        public async Task<StudentDTO> PostStudentDTO(StudentDTO student)
         {
             var restponse = await _httpClient.PostAsJsonAsync(_baseUrl, student);
             if (restponse.IsSuccessStatusCode)
@@ -62,7 +62,7 @@ namespace MVC.Services
 
         }
 
-        public async Task<TransactionDTO> AddtransactionDTO(TransactionDTO transaction)
+        public async Task<TransactionDTO> PostTransactionDTO(TransactionDTO transaction)
         {
            var restponse = await _httpClient.PostAsJsonAsync(_baseUrl, transaction);
             if (restponse.IsSuccessStatusCode)
@@ -92,20 +92,52 @@ namespace MVC.Services
                 return null;
             }
         }   
-        public Task<AccountDTO> GetAccountDTO(int StudentId)
+        public async Task<AccountDTO> GetAccountDTO(int StudentId)
         {
-            Task<List<AccountDTO>> accountList = GetAccountDTOs();
+            var response = await _httpClient.GetAsync($"{_baseUrl}/{StudentId}");
+            if (response.IsSuccessStatusCode)
+            {
+                var account = await response.Content.ReadFromJsonAsync<AccountDTO>();
+                return account;
+            }
+            else
+            {
+                throw new Exception("Failed to get account");
+                return null;
+            }   
+
+
 
         }
 
-        public Task<List<TransactionDTO>> GetTransactionDTOs(int StudentId)
+        public async Task<List<TransactionDTO>> GetTransactionDTOs(int StudentId)
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.GetAsync($"{_baseUrl}/{StudentId}");
+            if (response.IsSuccessStatusCode)
+            {
+                var transactionList = await response.Content.ReadFromJsonAsync<List<TransactionDTO>>();
+                return transactionList;
+            }
+            else
+            {
+                throw new Exception("Failed to get transactions");
+                return null;
+            }
         }
 
-        public Task<AccountDTO> UpdateAccountDTO(AccountDTO account)
+        public async Task<AccountDTO> UpdateAccountDTO(AccountDTO account)
         {
-            throw new NotImplementedException();
+            var restponse = await _httpClient.PutAsJsonAsync(_baseUrl, account);
+            if (restponse.IsSuccessStatusCode)
+            {
+                var accountReturned = await restponse.Content.ReadFromJsonAsync<AccountDTO>();
+                return accountReturned;
+            }
+            else
+            {
+                throw new Exception("Failed to update account");
+                return null;
+            }
         }
 
 
