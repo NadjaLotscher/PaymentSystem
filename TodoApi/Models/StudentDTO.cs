@@ -1,4 +1,4 @@
-﻿namespace MVC.Models
+﻿namespace WebApi.Models
 {
     public class StudentDTO
     {

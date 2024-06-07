@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PaymentSystem;
-using PaymentSystem.DAL;
+using Microsoft.EntityFrameworkCore;
 using PaymentSystem.Models;
 using System.Threading.Tasks;
+using WebApi.Models;
+using WebApi.Extension;
 
 namespace TodoApi.Controllers
 {
-    [ApiController]
+   
     [Route("api/[controller]")]
+    [ApiController]
     public class StudentController : ControllerBase
     {
         private readonly SystemContext _context;
@@ -17,7 +20,25 @@ namespace TodoApi.Controllers
             _context = context;
         }
 
-        [HttpGet("{id}")]
+        // PUT: api/addStudent
+
+        [HttpPost]
+    public async Task<ActionResult<Student>> PostStudent(StudentDTO studentDTO)
+        {
+            Student student = studentDTO.ToDAL();
+
+            Console.WriteLine("ID" + student.StudentId + " FirstName" + student.Firstname +
+                "LastName" + student.Lastname + " Username" + student.Lastname);
+            _context.Students.Add(student);
+
+            var student2 = student.ToModel();
+
+            return CreatedAtAction(nameof(GetStudent), new {id = student.StudentId},student2);
+
+        }
+
+
+    [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudent(int id)
         {
             var student = await _context.Students.FindAsync(id);
