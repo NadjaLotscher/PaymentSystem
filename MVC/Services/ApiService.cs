@@ -1,5 +1,6 @@
 ﻿using MVC.Models;
 using System.Net.Http.Json;
+using PaymentSystem.MVC.DTO;
 
 namespace MVC.Services
 {

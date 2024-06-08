@@ -1,10 +1,9 @@
-﻿using PaymentSystem.DAL.Models;
-using PaymentSystem.Models;
+﻿using PaymentSystem.Models;
 namespace MVC.Models
 {
     public class AddFundsRequest
     {
-        public Account Account { get; set; }
+        // public Account Account { get; set; }
 
         public Student Student { get; set; } 
 

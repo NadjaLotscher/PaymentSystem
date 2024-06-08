@@ -15,7 +15,6 @@ namespace PaymentSystem.Models
         public decimal Amount { get; set; }
         public string TransactionType { get; set; }
         public DateTime TransactionDate { get; set; }
-        public string Status { get; set; }
 
     }
 }
