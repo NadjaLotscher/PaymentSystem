@@ -24,7 +24,8 @@ builder.Services.AddHttpClient();
 builder.Services.Configure<MySettingsModel>(builder.Configuration.GetSection("MySettings"));
 
 // Register ApiService for dependency injection
-builder.Services.AddScoped<ApiService>();
+builder.Services.AddScoped<IApiService, ApiService>();
+
 
 // Configure DbContext for local MVC operations (if needed)
 builder.Services.AddDbContext<SystemContext>(options =>
