@@ -1,4 +1,4 @@
-﻿namespace PaymentSystem.MVC.DTOs
+﻿namespace PaymentSystem.MVC.DTO
 {
     public class TransactionDTO
     {
