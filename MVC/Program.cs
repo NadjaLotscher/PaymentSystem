@@ -45,7 +45,9 @@ using (var scope = app.Services.CreateScope())
     {
         // Add data into Database
         var services = scope.ServiceProvider;
+
         //seed(services);
+
     }
     
 }
@@ -70,3 +72,30 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+
+//void seed(IServiceProvider serviceProvider)
+//{
+//    using var context = new SystemContext(serviceProvider.GetRequiredService<DbContextOptions<SystemContext>>());
+
+// void seed(IServiceProvider serviceProvider)
+// {
+//     using var context = new SystemContext(serviceProvider.GetRequiredService<DbContextOptions<SystemContext>>());
+
+
+//        var account1 = new Account() { Username = "user1", Balance = 100.0m };
+//        var account2 = new Account() { Username = "user2", Balance = 150.0m };
+//        context.Accounts.AddRange(account1, account2);
+
+//        var student1 = new Student() { Firstname = "John", Lastname = "Doe" };
+//        var student2 = new Student() { Firstname = "Jane", Lastname = "Doe" };
+//        context.Students.AddRange(student1, student2);
+
+//        var transaction1 = new Transaction() { StudentId = student1.StudentId, Amount = 50.0m};
+//        var transaction2 = new Transaction() { StudentId = student2.StudentId, Amount = 75.0m};
+//        context.Transactions.AddRange(transaction1, transaction2);
+
+//        context.SaveChanges();
+    
+
+//}
