@@ -1,36 +1,43 @@
 using Microsoft.AspNetCore.Mvc;
-using PaymentSystem.Models;
-using System.Threading.Tasks;
 using MVC.Models;
-using PaymentSystem.MVC.Services;
+using MVC.Services;
+using System.Threading.Tasks;
 
 public class HomeController : Controller
 {
-    private readonly ApiService _apiService;
+    private readonly IApiService _apiService;
 
-    public HomeController(ApiService apiService)
+    public HomeController(IApiService apiService)
     {
         _apiService = apiService;
     }
 
-  
-
-    public async Task<IActionResult> Index(string userId)
+    public IActionResult Index()
     {
-        if (string.IsNullOrEmpty(userId))
-        {
-            // Handle the case when userId is null or empty
-            return View();
-        }
-        var account = await _apiService.GetAccountBalanceAsync(userId);
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult AddStudent()
+    {
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddFunds(AddFundsRequest request)
+    public async Task<IActionResult> AddStudent(StudentDTO student)
     {
-        var newBalance = await _apiService.AddFundsAsync(request);
-        ViewBag.NewBalance = newBalance;
-        return View();
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                await _apiService.PostStudentDTO(student);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Error: {ex.Message}");
+            }
+        }
+        return View(student);
     }
 }

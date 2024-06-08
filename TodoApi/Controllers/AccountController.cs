@@ -22,8 +22,14 @@ namespace TodoApi.Controllers
             _context = context;
         }
 
+        [HttpGet("{Username}")]
+        public async Task<ActionResult<Account>> GetBalance(string username)
+
+/*
         [HttpGet("{username}")]
         public async Task<ActionResult<AccountDTO>> GetBalance(string username)
+
+*/
         {
             var account = await _context.Accounts.SingleOrDefaultAsync(a => a.Username == username);
             if (account == null)

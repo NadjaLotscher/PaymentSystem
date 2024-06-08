@@ -6,7 +6,17 @@ namespace MVC.Services
 {
     public interface IApiService
     {
-        public Task<AddFundsRequest> GetAccountBalanceAsync(string userId);
+       // public Task<AddFundsRequest> GetAccountBalanceAsync(string userId);
+        
+        public Task<List<AccountDTO>> GetAccountDTOs();
+        public Task<AccountDTO> GetAccountDTO(int StudentId);
+        public Task<AccountDTO> PostAccountDTO(AccountDTO account);
+        public Task<AccountDTO> UpdateAccountDTO(AccountDTO account);
+
+        public Task<StudentDTO> PostStudentDTO(StudentDTO student);
+
+        public Task<List<TransactionDTO>> GetTransactionDTOs(int StudentId);
+        public Task<TransactionDTO> PostTransactionDTO(TransactionDTO transaction);
 
 
     }

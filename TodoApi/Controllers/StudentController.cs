@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PaymentSystem;
-using PaymentSystem.DAL;
 using PaymentSystem.Models;
 using System.Threading.Tasks;
+using WebApi.Models;
+using WebApi.Extension;
+using PaymentSystem;
 
 namespace TodoApi.Controllers
 {
@@ -17,6 +18,31 @@ namespace TodoApi.Controllers
             _context = context;
         }
 
+        // POST: api/Student
+        [HttpPost]
+        public async Task<ActionResult<Student>> PostStudent(StudentDTO studentDTO)
+        {
+            // Convert DTO to DAL model
+            Student student = studentDTO.ToDAL();
+
+            // Debugging output
+            Console.WriteLine("Received StudentDTO:");
+            Console.WriteLine("StudentID: " + studentDTO.StudentId);  // This should be null or 0
+            Console.WriteLine("Firstname: " + studentDTO.Firstname);
+            Console.WriteLine("Lastname: " + studentDTO.Lastname);
+            Console.WriteLine("Username: " + studentDTO.Username);
+
+            // Add the new student to the context
+            _context.Students.Add(student);
+            await _context.SaveChangesAsync();
+
+            // Convert back to DTO to return
+            var studentToReturn = student.ToModel();
+
+            return CreatedAtAction(nameof(GetStudent), new { id = student.StudentId }, studentToReturn);
+        }
+
+        // GET: api/Student/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudent(int id)
         {
@@ -26,21 +52,6 @@ namespace TodoApi.Controllers
                 return NotFound();
             }
             return student;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateStudent([FromBody] Student student)
-        {
-            try
-            {
-                _context.Students.Add(student);
-                await _context.SaveChangesAsync();
-                return CreatedAtAction(nameof(GetStudent), new { id = student.StudentId }, student);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "An error occurred while creating the student.");
-            }
         }
     }
 }

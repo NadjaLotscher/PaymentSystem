@@ -3,8 +3,8 @@ using Microsoft.Extensions.Options;
 using MVC.Models;
 using PaymentSystem;
 using PaymentSystem.DAL;
-using PaymentSystem.MVC.Services;
-using PaymentSystem.MVC.DTOs;
+using PaymentSystem.Models;
+using MVC.Services;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +24,8 @@ builder.Services.AddHttpClient();
 builder.Services.Configure<MySettingsModel>(builder.Configuration.GetSection("MySettings"));
 
 // Register ApiService for dependency injection
-builder.Services.AddScoped<ApiService>();
+builder.Services.AddScoped<IApiService, ApiService>();
+
 
 // Configure DbContext for local MVC operations (if needed)
 builder.Services.AddDbContext<SystemContext>(options =>
@@ -44,7 +45,9 @@ using (var scope = app.Services.CreateScope())
     {
         // Add data into Database
         var services = scope.ServiceProvider;
-        // seed(services);
+
+        //seed(services);
+
     }
     
 }
@@ -70,24 +73,29 @@ app.MapControllerRoute(
 
 app.Run();
 
-/*
-void seed(IServiceProvider serviceProvider)
-{
-    using var context = new SystemContext(serviceProvider.GetRequiredService<DbContextOptions<SystemContext>>());
+//void seed(IServiceProvider serviceProvider)
+//{
+//    using var context = new SystemContext(serviceProvider.GetRequiredService<DbContextOptions<SystemContext>>());
 
-        var account1 = new Account() { Username = "user1", Balance = 100.0m };
-        var account2 = new Account() { Username = "user2", Balance = 150.0m };
-        context.Accounts.AddRange(account1, account2);
+// void seed(IServiceProvider serviceProvider)
+// {
+//     using var context = new SystemContext(serviceProvider.GetRequiredService<DbContextOptions<SystemContext>>());
 
-        var student1 = new Student() { Firstname = "John", Lastname = "Doe" };
-        var student2 = new Student() { Firstname = "Jane", Lastname = "Doe" };
-        context.Students.AddRange(student1, student2);
 
-        var transaction1 = new Transaction() { StudentId = student1.StudentId, Amount = 50.0m};
-        var transaction2 = new Transaction() { StudentId = student2.StudentId, Amount = 75.0m};
-        context.Transactions.AddRange(transaction1, transaction2);
+//        var account1 = new Account() { Username = "user1", Balance = 100.0m };
+//        var account2 = new Account() { Username = "user2", Balance = 150.0m };
+//        context.Accounts.AddRange(account1, account2);
 
-        context.SaveChanges();
+//        var student1 = new Student() { Firstname = "John", Lastname = "Doe" };
+//        var student2 = new Student() { Firstname = "Jane", Lastname = "Doe" };
+//        context.Students.AddRange(student1, student2);
+
+//        var transaction1 = new Transaction() { StudentId = student1.StudentId, Amount = 50.0m};
+//        var transaction2 = new Transaction() { StudentId = student2.StudentId, Amount = 75.0m};
+//        context.Transactions.AddRange(transaction1, transaction2);
+
+//        context.SaveChanges();
     
-}
-*/
+
+//}
+
