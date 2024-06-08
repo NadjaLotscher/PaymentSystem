@@ -45,7 +45,9 @@ using (var scope = app.Services.CreateScope())
     {
         // Add data into Database
         var services = scope.ServiceProvider;
+
         //seed(services);
+
     }
     
 }
@@ -75,6 +77,11 @@ app.Run();
 //{
 //    using var context = new SystemContext(serviceProvider.GetRequiredService<DbContextOptions<SystemContext>>());
 
+// void seed(IServiceProvider serviceProvider)
+// {
+//     using var context = new SystemContext(serviceProvider.GetRequiredService<DbContextOptions<SystemContext>>());
+
+
 //        var account1 = new Account() { Username = "user1", Balance = 100.0m };
 //        var account2 = new Account() { Username = "user2", Balance = 150.0m };
 //        context.Accounts.AddRange(account1, account2);
@@ -89,4 +96,6 @@ app.Run();
 
 //        context.SaveChanges();
     
+
 //}
+

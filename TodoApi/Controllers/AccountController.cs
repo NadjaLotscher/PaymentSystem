@@ -5,6 +5,9 @@ using PaymentSystem.DAL;
 using PaymentSystem.DAL.Models;
 using PaymentSystem.Models;
 using System.Threading.Tasks;
+using PaymentSystem.MVC.DTOs;
+using System;
+using System.Threading.Tasks;
 
 namespace TodoApi.Controllers
 {
@@ -21,13 +24,32 @@ namespace TodoApi.Controllers
 
         [HttpGet("{Username}")]
         public async Task<ActionResult<Account>> GetBalance(string username)
+
+/*
+        [HttpGet("{username}")]
+        public async Task<ActionResult<AccountDTO>> GetBalance(string username)
+
+*/
         {
             var account = await _context.Accounts.SingleOrDefaultAsync(a => a.Username == username);
             if (account == null)
             {
                 return NotFound();
             }
-            return account;
+
+            var accountDTO = new AccountDTO
+            {
+                AccountId = account.AccountId,
+                StudentId = account.StudentId,
+                Username = account.Username,
+                Balance = account.Balance,
+                IsActive = account.IsActive,
+                NumberOfCopies = account.NumberOfCopies
+            };
+
+            return accountDTO;
+
+            // return account;
         }
 
         [HttpPost("addFunds")]
@@ -38,6 +60,7 @@ namespace TodoApi.Controllers
             {
                 return NotFound();
             }
+
 
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
