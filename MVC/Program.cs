@@ -73,6 +73,7 @@ app.MapControllerRoute(
 
 app.Run();
 
+
 //void seed(IServiceProvider serviceProvider)
 //{
 //    using var context = new SystemContext(serviceProvider.GetRequiredService<DbContextOptions<SystemContext>>());
@@ -98,4 +99,3 @@ app.Run();
     
 
 //}
-

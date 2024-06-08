@@ -32,7 +32,7 @@ public class HomeController : Controller
             try
             {
                 await _apiService.PostStudentDTO(student);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
             catch (Exception ex)
             {
