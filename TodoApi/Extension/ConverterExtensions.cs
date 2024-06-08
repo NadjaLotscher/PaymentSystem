@@ -6,7 +6,6 @@
         {
             return new PaymentSystem.Models.Student
             {
-                StudentId = studentDTO.StudentId,
                 Firstname = studentDTO.Firstname,
                 Lastname = studentDTO.Lastname,
                 Username = studentDTO.Username

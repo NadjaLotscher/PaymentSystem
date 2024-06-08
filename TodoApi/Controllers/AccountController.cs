@@ -19,10 +19,10 @@ namespace TodoApi.Controllers
             _context = context;
         }
 
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<Account>> GetBalance(string userId)
+        [HttpGet("{Username}")]
+        public async Task<ActionResult<Account>> GetBalance(string username)
         {
-            var account = await _context.Accounts.SingleOrDefaultAsync(a => a.Username == userId);
+            var account = await _context.Accounts.SingleOrDefaultAsync(a => a.Username == username);
             if (account == null)
             {
                 return NotFound();
