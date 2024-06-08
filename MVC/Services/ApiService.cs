@@ -1,146 +1,117 @@
-﻿using Microsoft.Extensions.Options;
-using MVC.Models;
-using PaymentSystem.DAL.Models;
-using PaymentSystem.Models;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using MVC.Models;
+﻿using MVC.Models;
+using System.Net.Http.Json;
 
 namespace MVC.Services
 {
-
     public class ApiService : IApiService
     {
         private readonly HttpClient _httpClient;
         private readonly string _baseUrl;
-  
-       //// Use this constructor to be consistent with the Program.cs configuration
-       // public ApiService(HttpClient httpClient, IOptions<MySettingsModel> settings)
-       // {
-       //     _httpClient = httpClient;
-       //     _baseUrl = settings.Value.WebApiBaseUrl;
-       // }
 
-        // Optionally, you could keep this constructor if needed
         public ApiService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _baseUrl = configuration["WebAPI:BaseUrl"];
         }
 
-        //add methods for all DB entities
         public async Task<AccountDTO> PostAccountDTO(AccountDTO account)
         {
-            var restponse = await _httpClient.PostAsJsonAsync(_baseUrl, account);
-            if (restponse.IsSuccessStatusCode)
+            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/account", account);
+            if (response.IsSuccessStatusCode)
             {
-                var accountReturned = await restponse.Content.ReadFromJsonAsync<AccountDTO>();
-                return accountReturned;
+                return await response.Content.ReadFromJsonAsync<AccountDTO>();
             }
             else
             {
-                throw new Exception("Failed to add account");
-                return null;
+                var error = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Failed to add account. Error: {error}");
             }
-
         }
 
         public async Task<StudentDTO> PostStudentDTO(StudentDTO student)
         {
-            var restponse = await _httpClient.PostAsJsonAsync(_baseUrl, student);
-            if (restponse.IsSuccessStatusCode)
+            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/student", student);
+            if (response.IsSuccessStatusCode)
             {
-                var studentReturned = await restponse.Content.ReadFromJsonAsync<StudentDTO>();
-                return studentReturned;
+                return await response.Content.ReadFromJsonAsync<StudentDTO>();
             }
             else
             {
-                throw new Exception("Failed to add student");
-                return null;
+                var error = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Failed to add student. Error: {error}");
             }
-
         }
 
         public async Task<TransactionDTO> PostTransactionDTO(TransactionDTO transaction)
         {
-           var restponse = await _httpClient.PostAsJsonAsync(_baseUrl, transaction);
-            if (restponse.IsSuccessStatusCode)
+            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/transaction", transaction);
+            if (response.IsSuccessStatusCode)
             {
-                var transactionReturned = await restponse.Content.ReadFromJsonAsync<TransactionDTO>();
-                return transactionReturned;
+                return await response.Content.ReadFromJsonAsync<TransactionDTO>();
             }
             else
             {
-                throw new Exception("Failed to add transaction");
-                return null;
+                var error = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Failed to add transaction. Error: {error}");
             }
         }
 
-        
         public async Task<List<AccountDTO>> GetAccountDTOs()
         {
-            var response = await _httpClient.GetAsync(_baseUrl);
+            var response = await _httpClient.GetAsync($"{_baseUrl}/api/account");
             if (response.IsSuccessStatusCode)
             {
-                var accountList = await response.Content.ReadFromJsonAsync<List<AccountDTO>>();
-                return accountList;
+                return await response.Content.ReadFromJsonAsync<List<AccountDTO>>();
             }
             else
             {
-                throw new Exception("Failed to get accounts");
-                return null;
+                var error = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Failed to get accounts. Error: {error}");
             }
-        }   
-        public async Task<AccountDTO> GetAccountDTO(int StudentId)
-        {
-            var response = await _httpClient.GetAsync($"{_baseUrl}/{StudentId}");
-            if (response.IsSuccessStatusCode)
-            {
-                var account = await response.Content.ReadFromJsonAsync<AccountDTO>();
-                return account;
-            }
-            else
-            {
-                throw new Exception("Failed to get account");
-                return null;
-            }   
-
-
-
         }
 
-        public async Task<List<TransactionDTO>> GetTransactionDTOs(int StudentId)
+        public async Task<AccountDTO> GetAccountDTO(int studentId)
         {
-            var response = await _httpClient.GetAsync($"{_baseUrl}/{StudentId}");
+            var response = await _httpClient.GetAsync($"{_baseUrl}/api/account/{studentId}");
             if (response.IsSuccessStatusCode)
             {
-                var transactionList = await response.Content.ReadFromJsonAsync<List<TransactionDTO>>();
-                return transactionList;
+                return await response.Content.ReadFromJsonAsync<AccountDTO>();
             }
             else
             {
-                throw new Exception("Failed to get transactions");
-                return null;
+                var error = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Failed to get account. Error: {error}");
+            }
+        }
+
+        public async Task<List<TransactionDTO>> GetTransactionDTOs(int studentId)
+        {
+            var response = await _httpClient.GetAsync($"{_baseUrl}/api/transaction/{studentId}");
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<List<TransactionDTO>>();
+            }
+            else
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Failed to get transactions. Error: {error}");
             }
         }
 
         public async Task<AccountDTO> UpdateAccountDTO(AccountDTO account)
         {
-            var restponse = await _httpClient.PutAsJsonAsync(_baseUrl, account);
-            if (restponse.IsSuccessStatusCode)
+            var response = await _httpClient.PutAsJsonAsync($"{_baseUrl}/api/account", account);
+            if (response.IsSuccessStatusCode)
             {
-                var accountReturned = await restponse.Content.ReadFromJsonAsync<AccountDTO>();
-                return accountReturned;
+                return await response.Content.ReadFromJsonAsync<AccountDTO>();
             }
             else
             {
-                throw new Exception("Failed to update account");
-                return null;
+                var error = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Failed to update account. Error: {error}");
             }
         }
-
-
+   
 
 
         //public async Task<Account> GetAccountBalanceAsync(string userId)

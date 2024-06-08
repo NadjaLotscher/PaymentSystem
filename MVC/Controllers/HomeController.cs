@@ -1,26 +1,24 @@
 using Microsoft.AspNetCore.Mvc;
-using PaymentSystem.Models;
-using System.Threading.Tasks;
 using MVC.Models;
 using MVC.Services;
+using System.Threading.Tasks;
 
 public class HomeController : Controller
 {
-    private readonly ApiService _apiService;
+    private readonly IApiService _apiService;
 
-    public HomeController(ApiService apiService)
+    public HomeController(IApiService apiService)
     {
         _apiService = apiService;
     }
 
     public IActionResult Index()
     {
-        //HttpContext.Session.SetString("UserId", "abcdef");
         return View();
     }
 
     [HttpGet]
-    public async Task<IActionResult> AddStudent()
+    public IActionResult AddStudent()
     {
         return View();
     }
@@ -28,17 +26,18 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> AddStudent(StudentDTO student)
     {
-        if (!ModelState.IsValid)
+        if (ModelState.IsValid)
         {
-            await _apiService.PostStudentDTO(student);
-            return RedirectToAction("Index");
-     
+            try
+            {
+                await _apiService.PostStudentDTO(student);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Error: {ex.Message}");
+            }
         }
         return View(student);
-
-
     }
 }
-
-
-
