@@ -115,6 +115,12 @@ namespace MVC.Services
             response.EnsureSuccessStatusCode();
         }
 
+        public async Task PostPrintRequest(PrintRequestDTO printRequest)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/transaction/print", printRequest);
+            response.EnsureSuccessStatusCode();
+        }
+
     }
 
 

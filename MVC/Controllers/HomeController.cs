@@ -89,6 +89,30 @@ public class HomeController : Controller
         return View("AddMoney", transactionRequest);
     }
 
+    [HttpGet]
+    public IActionResult Print()
+    {
+        return View(new PrintRequestDTO());
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Print(PrintRequestDTO printRequest)
+    {
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                await _apiService.PostPrintRequest(printRequest);
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Error: {ex.Message}");
+            }
+        }
+        return View(printRequest);
+    }
+
 
     /*
     [HttpGet]

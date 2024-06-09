@@ -108,5 +108,38 @@ namespace TodoApi.Controllers
 
             return Ok(transaction);
         }
+
+        [HttpPost("print")]
+        public async Task<IActionResult> PostPrintRequest(PrintRequestDTO printRequest)
+        {
+            var student = await _context.Students.FirstOrDefaultAsync(s => s.Username == printRequest.Username);
+            if (student == null)
+            {
+                return NotFound("Student not found");
+            }
+
+            decimal costPerCopy = 0.08M;
+            decimal totalCost = printRequest.NumberOfCopies * costPerCopy;
+
+            if (student.Balance < totalCost)
+            {
+                return BadRequest("Insufficient balance");
+            }
+
+            student.Balance -= totalCost;
+
+            var transaction = new Transaction
+            {
+                StudentId = student.StudentId,
+                Amount = totalCost,
+                TransactionDate = DateTime.Now,
+                TransactionType = "print"
+            };
+
+            _context.Transactions.Add(transaction);
+            await _context.SaveChangesAsync();
+
+            return Ok(transaction);
+        }
     }
 }

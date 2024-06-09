@@ -16,6 +16,7 @@ namespace MVC.Services
         public Task<List<TransactionDTO>> GetTransactionDTOs(string username);
         // public Task<TransactionDTO> PostTransactionDTO(TransactionDTO transaction);
         public Task PostTransactionRequest(TransactionRequestDTO transactionRequest);
+        Task PostPrintRequest(PrintRequestDTO printRequest);
 
 
     }
