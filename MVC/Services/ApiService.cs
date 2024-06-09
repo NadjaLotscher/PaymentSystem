@@ -38,8 +38,7 @@ namespace MVC.Services
 
 
             //contact API to get students
-            var response = await _httpClient.GetAsync(_baseUrl);
-            await _httpClient.GetAsync(_baseUrl);
+            var response = await _httpClient.GetAsync($"{_baseUrl}/api/student");
             response.EnsureSuccessStatusCode();
             var responseBody = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions
@@ -48,9 +47,21 @@ namespace MVC.Services
             };
             var students = JsonSerializer.Deserialize<List<StudentDTO>>(responseBody, options);
 
-
             return students;
+
+
         }
+
+        public async Task DeleteStudentDTOAsync(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"{_baseUrl}/api/student/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Failed to delete student. Error: {error}");
+            }
+        }
+
 
         /*
         public async Task<TransactionDTO> PostTransactionDTO(TransactionDTO transaction)

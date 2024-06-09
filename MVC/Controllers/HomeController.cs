@@ -13,9 +13,18 @@ public class HomeController : Controller
         _apiService = apiService;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        try
+        {
+            var students = await _apiService.GetStudentDTOAsync();
+            return View(students);
+        }
+        catch (Exception ex)
+        {
+            ViewBag.ErrorMessage = "Error loading students: " + ex.Message;
+            return View(new List<StudentDTO>());
+        }
     }
 
     [HttpGet]
@@ -40,6 +49,20 @@ public class HomeController : Controller
             }
         }
         return View(student);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            await _apiService.DeleteStudentDTOAsync(id);
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = ex.Message });
+        }
     }
 
     [HttpGet]
@@ -89,5 +112,6 @@ public class HomeController : Controller
         }
         return View(transaction);
     }
+ 
     */
 }
