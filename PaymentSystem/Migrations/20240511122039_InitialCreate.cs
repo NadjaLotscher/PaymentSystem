@@ -1,6 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+/*
+ * Add new migration
+ * cd C:\Users\schmi\source\repos\NadjaLotscher\PaymentSystem
+ * dotnet ef migrations add NameOfTheMerge --project PaymentSystem --startup-project ToDoApi
+*/
+
 #nullable disable
 
 namespace PaymentSystem.DAL.Migrations

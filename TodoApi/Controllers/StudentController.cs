@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PaymentSystem.Models;
 using System.Threading.Tasks;
-using WebApi.Models;
+using WebApi.DTO;
 using WebApi.Extension;
 using PaymentSystem;
+using Microsoft.EntityFrameworkCore;
 
 namespace TodoApi.Controllers
 {
@@ -52,6 +53,23 @@ namespace TodoApi.Controllers
                 return NotFound();
             }
             return student;
+        }
+
+
+        // New method to get all students?
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Student>>> GetAllStudents()
+        {
+
+            var ListOfStudents = await _context.Students.ToListAsync();
+            List<StudentDTO> ListOfStudentDTO = new List<StudentDTO>();
+            foreach (var student in ListOfStudents)
+            {
+                StudentDTO studentDTO = new StudentDTO();
+                studentDTO = student.ToModel();
+                ListOfStudentDTO.Add(studentDTO);
+            }
+            return Ok(ListOfStudentDTO);
         }
     }
 }
