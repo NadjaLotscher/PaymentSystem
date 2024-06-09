@@ -9,13 +9,13 @@ namespace PaymentSystem.Models
 {
     public class Student
     {
-        public int StudentId { get; set; }
+          public int StudentId { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Username { get; set; }
         public double Balance { get; set; } 
         public int? UID { get; set; }
-        public List<Transaction> TransactionList { get; set; }  
+        public List<Transaction> TransactionList { get; set; }
         //public string Password { get; set; } /* Goal, but is not needed */
         //public string Class {  get; set; } /* Goal, but also not needed (if i want to add money to all people of one class */
     }

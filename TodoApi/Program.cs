@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PaymentSystem;
 using PaymentSystem.DAL;
-using PaymentSystem.DAL.Models;
 using PaymentSystem.Models;
 
 namespace TodoApi
@@ -65,19 +64,11 @@ namespace TodoApi
                 context.Students.AddRange(students);
                 context.SaveChanges();
 
-                var accounts = new[]
-                {
-                    new Account { StudentId = students[0].StudentId, Username = "nadjalotscher", Balance = 100.0m, IsActive = true, NumberOfCopies = 0 },
-                    new Account { StudentId = students[1].StudentId, Username = "johndoe", Balance = 50.0m, IsActive = true, NumberOfCopies = 0 }
-                };
-
-                context.Accounts.AddRange(accounts);
-                context.SaveChanges();
 
                 var transactions = new[]
                 {
-                    new Transaction { StudentId = students[0].StudentId, Amount = 50.0m, TransactionType = "Credit", TransactionDate = DateTime.Now, Status = "Success" },
-                    new Transaction { StudentId = students[1].StudentId, Amount = 75.0m, TransactionType = "Credit", TransactionDate = DateTime.Now, Status = "Success" }
+                    new Transaction { StudentId = students[0].StudentId, Amount = 50.0m, TransactionType = "Credit", TransactionDate = DateTime.Now },
+                    new Transaction { StudentId = students[1].StudentId, Amount = 75.0m, TransactionType = "Credit", TransactionDate = DateTime.Now}
                 };
 
                 context.Transactions.AddRange(transactions);

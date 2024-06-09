@@ -20,9 +20,6 @@ builder.Services.AddControllersWithViews()
 // Add the HTTP client service
 builder.Services.AddHttpClient();
 
-// Configure MySettings from appsettings.json
-builder.Services.Configure<MySettingsModel>(builder.Configuration.GetSection("MySettings"));
-
 // Register ApiService for dependency injection
 builder.Services.AddScoped<IApiService, ApiService>();
 

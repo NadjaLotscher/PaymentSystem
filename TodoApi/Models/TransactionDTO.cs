@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PaymentSystem.Models;
 
-namespace PaymentSystem.Models
+namespace WebApi.Models
 {
-    public class Transaction
+    public class TransactionDTO
     {
-        public int TransactionId { get; set; }
+        public int? TransactionId { get; set; }
         public int StudentId { get; set; }  // Foreign key property
         public Student Student { get; set; }
         public decimal Amount { get; set; }
