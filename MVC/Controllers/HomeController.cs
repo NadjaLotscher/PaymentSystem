@@ -51,6 +51,20 @@ public class HomeController : Controller
         return View(student);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            await _apiService.DeleteStudentDTOAsync(id);
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
     [HttpGet]
     public IActionResult addTransaction() { return View(); }
 

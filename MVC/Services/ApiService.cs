@@ -51,6 +51,17 @@ namespace MVC.Services
 
         }
 
+        public async Task DeleteStudentDTOAsync(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"{_baseUrl}/api/student/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Failed to delete student. Error: {error}");
+            }
+        }
+
+
         public async Task<TransactionDTO> PostTransactionDTO(TransactionDTO transaction)
         {
             var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/transaction", transaction);

@@ -5,6 +5,7 @@ using WebApi.Models;
 using WebApi.Extension;
 using PaymentSystem;
 using Microsoft.EntityFrameworkCore;
+using MVC.Services;
 
 namespace TodoApi.Controllers
 {
@@ -16,6 +17,7 @@ namespace TodoApi.Controllers
 
         public StudentController(SystemContext context)
         {
+
             _context = context;
         }
 
@@ -68,6 +70,22 @@ namespace TodoApi.Controllers
                 ListOfStudentDTO.Add(studentDTO);
             }
             return Ok(ListOfStudentDTO);
+        }
+
+        // DELETE: api/Student/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteStudent(int id)
+        {
+            var student = await _context.Students.FindAsync(id);
+            if (student == null)
+            {
+                return NotFound(new { Message = $"Student with ID {id} not found." });
+            }
+
+            _context.Students.Remove(student);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }
