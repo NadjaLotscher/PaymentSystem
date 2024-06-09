@@ -1,4 +1,4 @@
-﻿@model PaymentSystem.MVC.DTO.StudentDTO
+﻿@model PaymentSystem.MVC.Models.StudentDTO
 
 @{
     ViewData["Title"] = "AddStudent";
@@ -39,5 +39,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

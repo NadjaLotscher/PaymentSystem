@@ -1,5 +1,5 @@
 ﻿using MVC.Models;
-using PaymentSystem.MVC.DTO;
+using PaymentSystem.MVC.Models;
 
 namespace MVC.Services
 

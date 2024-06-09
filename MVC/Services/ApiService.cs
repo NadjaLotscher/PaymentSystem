@@ -1,6 +1,6 @@
 ﻿using Azure;
 using MVC.Models;
-using PaymentSystem.MVC.DTO;
+using PaymentSystem.MVC.Models;
 using System.Collections.Generic;
 using System.Net.Http.Json;
 using System.Text.Json;
