@@ -1,23 +1,18 @@
 ﻿using MVC.Models;
 using PaymentSystem.MVC.DTO;
 
-
 namespace MVC.Services
 
 //interface for ApiService with all methods
 {
     public interface IApiService
     {
-       // public Task<AddFundsRequest> GetAccountBalanceAsync(string userId);
-        
-        public Task<List<AccountDTO>> GetAccountDTOs();
-        public Task<AccountDTO> GetAccountDTO(int StudentId);
-        public Task<AccountDTO> PostAccountDTO(AccountDTO account);
-        public Task<AccountDTO> UpdateAccountDTO(AccountDTO account);
+        // public Task<AddFundsRequest> GetAccountBalanceAsync(string userId);
+
 
         public Task<StudentDTO> PostStudentDTO(StudentDTO student);
-
-        public Task<List<TransactionDTO>> GetTransactionDTOs(int StudentId);
+        public Task<List<StudentDTO>> GetStudentDTOAsync();
+        public Task<List<TransactionDTO>> GetTransactionDTOs(string username);
         public Task<TransactionDTO> PostTransactionDTO(TransactionDTO transaction);
 
 
