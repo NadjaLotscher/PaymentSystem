@@ -1,4 +1,6 @@
-﻿namespace WebApi.Models
+﻿using WebApi.DTO;
+
+namespace WebApi.Models
 {
     public class StudentValue
     {

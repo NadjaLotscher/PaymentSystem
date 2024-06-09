@@ -41,4 +41,26 @@ public class HomeController : Controller
         }
         return View(student);
     }
+
+    [HttpGet]
+    public IActionResult addTransaction() { return View(); }
+
+    [HttpPost]
+    public async Task<IActionResult> addTransaction(TransactionDTO transaction)
+    {
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                await _apiService.PostTransactionDTO(transaction);
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Error: {ex.Message}");
+            }
+
+        }
+        return View(transaction);
+    }
 }
