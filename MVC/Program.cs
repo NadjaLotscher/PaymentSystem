@@ -1,10 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using MVC.Models;
-using PaymentSystem;
-using PaymentSystem.DAL;
-using PaymentSystem.Models;
 using MVC.Services;
+using PaymentSystem;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,12 +16,8 @@ builder.Services.AddControllersWithViews()
 // Add the HTTP client service
 builder.Services.AddHttpClient();
 
-// Configure MySettings from appsettings.json
-builder.Services.Configure<MySettingsModel>(builder.Configuration.GetSection("MySettings"));
-
 // Register ApiService for dependency injection
 builder.Services.AddScoped<IApiService, ApiService>();
-
 
 // Configure DbContext for local MVC operations (if needed)
 builder.Services.AddDbContext<SystemContext>(options =>
@@ -47,7 +39,7 @@ using (var scope = app.Services.CreateScope())
         var services = scope.ServiceProvider;
         //seed(services);
     }
-    
+
 }
 
 // Configure the HTTP request pipeline.
