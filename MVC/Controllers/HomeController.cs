@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 using MVC.Services;
-using PaymentSystem.MVC.DTO;
 using System.Threading.Tasks;
 
 public class HomeController : Controller
@@ -19,7 +18,10 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    public IActionResult AddStudent() { return View(); }
+    public IActionResult AddStudent()
+    {
+        return View();
+    }
 
     [HttpPost]
     public async Task<IActionResult> AddStudent(StudentDTO student)
@@ -29,7 +31,7 @@ public class HomeController : Controller
             try
             {
                 await _apiService.PostStudentDTO(student);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index","Home");
             }
             catch (Exception ex)
             {
@@ -38,27 +40,4 @@ public class HomeController : Controller
         }
         return View(student);
     }
-
-    [HttpGet]
-    public IActionResult addTransaction() { return View(); }
-
-    [HttpPost]
-    public async Task<IActionResult> addTransaction(TransactionDTO transaction)
-    {
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                await _apiService.PostTransactionDTO(transaction);
-                return RedirectToAction("Index", "Home");
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError(string.Empty, $"Error: {ex.Message}");
-            }
-
-        }
-        return View(transaction);
-    }
-
 }
