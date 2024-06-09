@@ -83,5 +83,30 @@ namespace TodoApi.Controllers
             var transactionDTO = transaction.ToModel();
             return Ok(transactionDTO);
         }
+
+        [HttpPost("PostTransaction")]
+        public async Task<IActionResult> PostTransaction(TransactionRequestDTO transactionRequest)
+        {
+            var student = await _context.Students.FirstOrDefaultAsync(s => s.Username == transactionRequest.Username);
+            if (student == null)
+            {
+                return NotFound("Student not found");
+            }
+
+            student.Balance += transactionRequest.Amount;
+
+            var transaction = new Transaction
+            {
+                StudentId = student.StudentId,
+                Amount = transactionRequest.Amount,
+                TransactionDate = DateTime.Now,
+                TransactionType = transactionRequest.TransactionType
+            };
+
+            _context.Transactions.Add(transaction);
+            await _context.SaveChangesAsync();
+
+            return Ok(transaction);
+        }
     }
 }

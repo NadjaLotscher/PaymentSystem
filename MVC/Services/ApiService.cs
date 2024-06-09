@@ -3,6 +3,7 @@ using MVC.Models;
 using PaymentSystem.MVC.Models;
 using System.Collections.Generic;
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 
 namespace MVC.Services
@@ -51,6 +52,7 @@ namespace MVC.Services
             return students;
         }
 
+        /*
         public async Task<TransactionDTO> PostTransactionDTO(TransactionDTO transaction)
         {
             var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/transaction", transaction);
@@ -64,7 +66,7 @@ namespace MVC.Services
                 throw new Exception($"Failed to add transaction. Error: {error}");
             }
         }
-
+        */
 
 
         public async Task<List<TransactionDTO>> GetTransactionDTOs(string username)
@@ -94,6 +96,12 @@ namespace MVC.Services
             {
                 throw new Exception($"Student with username '{username}' not found.");
             }
+        }
+
+        public async Task PostTransactionRequest(TransactionRequestDTO transactionRequest)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/transaction/PostTransaction", transactionRequest);
+            response.EnsureSuccessStatusCode();
         }
 
     }

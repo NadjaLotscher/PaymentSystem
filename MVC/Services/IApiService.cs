@@ -13,7 +13,8 @@ namespace MVC.Services
         public Task<StudentDTO> PostStudentDTO(StudentDTO student);
         public Task<List<StudentDTO>> GetStudentDTOAsync();
         public Task<List<TransactionDTO>> GetTransactionDTOs(string username);
-        public Task<TransactionDTO> PostTransactionDTO(TransactionDTO transaction);
+        // public Task<TransactionDTO> PostTransactionDTO(TransactionDTO transaction);
+        public Task PostTransactionRequest(TransactionRequestDTO transactionRequest);
 
 
     }

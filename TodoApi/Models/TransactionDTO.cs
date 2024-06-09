@@ -9,5 +9,6 @@ namespace WebApi.Models
         public Student Student { get; set; } = null!;
         public decimal Amount { get; set; }
         public DateTime TransactionDate { get; set; }
+        public string TransactionType { get; set; }
     }
 }

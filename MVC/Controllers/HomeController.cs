@@ -43,6 +43,32 @@ public class HomeController : Controller
     }
 
     [HttpGet]
+    public IActionResult AddTransaction()
+    {
+        return View("AddMoney");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddTransactionRequest(TransactionRequestDTO transactionRequest)
+    {
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                await _apiService.PostTransactionRequest(transactionRequest);
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Error: {ex.Message}");
+            }
+        }
+        return View("AddMoney", transactionRequest);
+    }
+
+
+    /*
+    [HttpGet]
     public IActionResult addTransaction() { return View(); }
 
     [HttpPost]
@@ -63,4 +89,5 @@ public class HomeController : Controller
         }
         return View(transaction);
     }
+    */
 }
