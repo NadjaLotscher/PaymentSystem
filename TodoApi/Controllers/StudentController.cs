@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PaymentSystem.Models;
 using System.Threading.Tasks;
-using WebApi.DTO;
+using WebApi.Models;
 using WebApi.Extension;
 using PaymentSystem;
 using Microsoft.EntityFrameworkCore;
@@ -55,8 +55,6 @@ namespace TodoApi.Controllers
             return student;
         }
 
-
-        // New method to get all students?
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetAllStudents()
         {

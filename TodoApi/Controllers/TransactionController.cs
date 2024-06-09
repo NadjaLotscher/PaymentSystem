@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using PaymentSystem;
 using PaymentSystem.Models;
 using WebApi.Extension;
-using WebApi.DTO;
+using WebApi.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace TodoApi.Controllers
 {
@@ -21,14 +22,17 @@ namespace TodoApi.Controllers
             _context = context;
         }
 
-        [HttpGet("{username}")]
-        public async Task<ActionResult<IEnumerable<Transaction>>> GetTransactions(string username)
+        [HttpGet("{Username}")]
+        public async Task<ActionResult<IEnumerable<TransactionDTO>>> GetAllTransaction(string Username)
         {
-            var student = await _context.Students.FirstOrDefaultAsync(s => s.Username == username);
+            // Get the student with the matching username 
+            var student = await _context.Students.FirstOrDefaultAsync(s => s.Username == Username);
+
             if (student == null)
             {
                 return NotFound();
             }
+
             // Get transactions for the found student
             var transactions = await _context.Transactions.Where(t => t.Student.StudentId == student.StudentId).ToListAsync();
 
@@ -39,10 +43,9 @@ namespace TodoApi.Controllers
         }
 
         [HttpPost]
-        [HttpPost]
-        public async Task<ActionResult<TransactionDTO>> PostTransaction(TransactionDTO transactionDTO)
+        public async Task<ActionResult<Transaction>> PostTransaction(TransactionDTO transactionDTO)
         {
-            var transaction = transactionDTO.ToDAL();
+            Transaction transaction = transactionDTO.ToDAL();
 
             using (var transactionScope = await _context.Database.BeginTransactionAsync())
             {
@@ -50,12 +53,18 @@ namespace TodoApi.Controllers
                 {
                     _context.Transactions.Add(transaction);
                     await _context.SaveChangesAsync();
+
+                    // Commit transaction
                     await transactionScope.CommitAsync();
+
+                    // Convert back to DTO to return
                     var transactionToReturn = transaction.ToModel();
+
                     return CreatedAtAction(nameof(GetTransaction), new { id = transaction.TransactionId }, transactionToReturn);
                 }
                 catch (Exception)
                 {
+                    // Rollback transaction in case of an error
                     await transactionScope.RollbackAsync();
                     throw;
                 }
@@ -76,4 +85,3 @@ namespace TodoApi.Controllers
         }
     }
 }
-

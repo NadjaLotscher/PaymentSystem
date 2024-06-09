@@ -1,6 +1,5 @@
 ﻿using MVC.Models;
-using PaymentSystem.MVC.DTO;
-
+using PaymentSystem.MVC.Models;
 
 namespace MVC.Services
 
@@ -8,11 +7,15 @@ namespace MVC.Services
 {
     public interface IApiService
     {
-        public Task<List<StudentDTO>> GetStudentDTOs();
-        public Task<StudentDTO> PostStudentDTO(StudentDTO student);
+        // public Task<AddFundsRequest> GetAccountBalanceAsync(string userId);
 
+
+        public Task<StudentDTO> PostStudentDTO(StudentDTO student);
+        public Task<List<StudentDTO>> GetStudentDTOAsync();
         public Task<List<TransactionDTO>> GetTransactionDTOs(string username);
         public Task<TransactionDTO> PostTransactionDTO(TransactionDTO transaction);
+
+
     }
 }
 

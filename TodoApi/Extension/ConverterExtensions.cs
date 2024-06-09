@@ -1,11 +1,11 @@
-﻿using WebApi.DTO;
+﻿using PaymentSystem.Models;
+using System.Transactions;
 
 namespace WebApi.Extension
 {
     public static class ConverterExtensions
     {
-        
-    public static PaymentSystem.Models.Student ToDAL(this WebApi.DTO.StudentDTO studentDTO)
+        public static PaymentSystem.Models.Student ToDAL(this WebApi.Models.StudentDTO studentDTO)
         {
             return new PaymentSystem.Models.Student
             {
@@ -17,10 +17,10 @@ namespace WebApi.Extension
 
             };
         }
-         
-        public static WebApi.DTO.StudentDTO ToModel(this PaymentSystem.Models.Student student)
+
+        public static WebApi.Models.StudentDTO ToModel(this PaymentSystem.Models.Student student)
         {
-            return new WebApi.DTO.StudentDTO
+            return new WebApi.Models.StudentDTO
             {
                 StudentId = student.StudentId,
                 Firstname = student.Firstname,
@@ -28,31 +28,37 @@ namespace WebApi.Extension
                 Username = student.Username,
                 Balance = student.Balance,
                 UID = student.UID,
+
             };
         }
 
-        public static PaymentSystem.Models.Transaction ToDAL(this WebApi.DTO.TransactionDTO transactionDTO)
+
+        public static PaymentSystem.Models.Transaction ToDAL(this WebApi.Models.TransactionDTO transactionDTO)
         {
             return new PaymentSystem.Models.Transaction
             {
 
                 StudentId = transactionDTO.Student.StudentId,
                 Amount = transactionDTO.Amount,
+                TransactionType = transactionDTO.TransactionType,
                 TransactionDate = transactionDTO.TransactionDate
 
             };
         }
 
-        public static WebApi.DTO.TransactionDTO ToModel(this PaymentSystem.Models.Transaction transaction)
+        public static WebApi.Models.TransactionDTO ToModel(this PaymentSystem.Models.Transaction transaction)
         {
-            return new WebApi.DTO.TransactionDTO
+            return new WebApi.Models.TransactionDTO
             {
                 TransactionId = transaction.TransactionId,
                 StudentId = transaction.Student.StudentId,
                 Amount = transaction.Amount,
+                TransactionType = transaction.TransactionType,
                 TransactionDate = transaction.TransactionDate
             };
         }
+
+
 
     }
 }
