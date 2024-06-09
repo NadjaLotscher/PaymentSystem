@@ -6,12 +6,13 @@
 
 <h1>AddStudent</h1>
 
-<h4>Add an student to our database</h4>
+<h4>Add your own student</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddStudent" method="post">
+        <form asp-action="AddStudent">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
             <div class="form-group">
                 <label asp-for="Firstname" class="control-label"></label>
                 <input asp-for="Firstname" class="form-control" />
@@ -28,6 +29,16 @@
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="UID" class="control-label"></label>
+                <input asp-for="UID" class="form-control" />
+                <span asp-validation-for="UID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Balance" class="control-label"></label>
+                <input asp-for="Balance" class="form-control" />
+                <span asp-validation-for="Balance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Add Student" class="btn btn-primary" />
             </div>
         </form>
@@ -39,7 +50,5 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

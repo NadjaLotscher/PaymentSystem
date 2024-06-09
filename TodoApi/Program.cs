@@ -75,8 +75,8 @@ namespace TodoApi
 
                 var transactions = new[]
                 {
-                    new Transaction { StudentId = students[1].StudentId, Amount = 50.0m, TransactionType = "Credit", TransactionDate = DateTime.Now, },
-                    new Transaction { StudentId = students[2].StudentId, Amount = 75.0m, TransactionType = "Credit", TransactionDate = DateTime.Now, }
+                    new Transaction { StudentId = students[1].StudentId, Amount = 50.0m,  TransactionDate = DateTime.Now, },
+                    new Transaction { StudentId = students[2].StudentId, Amount = 75.0m,  TransactionDate = DateTime.Now, }
                 };
 
                 context.Transactions.AddRange(transactions);

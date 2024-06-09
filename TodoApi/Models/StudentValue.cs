@@ -1,4 +1,4 @@
-﻿using WebApi.DTO;
+﻿using WebApi.Models;
 
 namespace WebApi.Models
 {

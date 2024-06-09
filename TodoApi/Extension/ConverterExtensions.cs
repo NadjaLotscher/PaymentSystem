@@ -32,7 +32,6 @@ namespace WebApi.Extension
             };
         }
 
-
         public static PaymentSystem.Models.Transaction ToDAL(this WebApi.Models.TransactionDTO transactionDTO)
         {
             return new PaymentSystem.Models.Transaction
@@ -40,7 +39,6 @@ namespace WebApi.Extension
 
                 StudentId = transactionDTO.Student.StudentId,
                 Amount = transactionDTO.Amount,
-                TransactionType = transactionDTO.TransactionType,
                 TransactionDate = transactionDTO.TransactionDate
 
             };
@@ -53,7 +51,6 @@ namespace WebApi.Extension
                 TransactionId = transaction.TransactionId,
                 StudentId = transaction.Student.StudentId,
                 Amount = transaction.Amount,
-                TransactionType = transaction.TransactionType,
                 TransactionDate = transaction.TransactionDate
             };
         }
