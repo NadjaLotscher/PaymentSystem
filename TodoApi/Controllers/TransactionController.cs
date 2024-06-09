@@ -22,6 +22,7 @@ namespace TodoApi.Controllers
             _context = context;
         }
 
+        // GET: api/Transaction/{Username}
         [HttpGet("{Username}")]
         public async Task<ActionResult<IEnumerable<TransactionDTO>>> GetAllTransaction(string Username)
         {
@@ -42,6 +43,8 @@ namespace TodoApi.Controllers
             return Ok(transactionDTOs);
         }
 
+
+        // POST: api/Transaction
         [HttpPost]
         public async Task<ActionResult<Transaction>> PostTransaction(TransactionDTO transactionDTO)
         {
@@ -64,13 +67,13 @@ namespace TodoApi.Controllers
                 }
                 catch (Exception)
                 {
-                    // Rollback transaction in case of an error
                     await transactionScope.RollbackAsync();
                     throw;
                 }
             }
         }
 
+        // GET: api/Transaction/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<TransactionDTO>> GetTransaction(int id)
         {
@@ -84,6 +87,7 @@ namespace TodoApi.Controllers
             return Ok(transactionDTO);
         }
 
+        // POST: api/Transaction/PostTransaction (Addming Money)
         [HttpPost("PostTransaction")]
         public async Task<IActionResult> PostTransaction(TransactionRequestDTO transactionRequest)
         {
@@ -109,6 +113,8 @@ namespace TodoApi.Controllers
             return Ok(transaction);
         }
 
+
+        // POST: api/Transaction/print (Print Request)
         [HttpPost("print")]
         public async Task<IActionResult> PostPrintRequest(PrintRequestDTO printRequest)
         {

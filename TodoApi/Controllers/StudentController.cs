@@ -28,13 +28,6 @@ namespace TodoApi.Controllers
             // Convert DTO to DAL model
             Student student = studentDTO.ToDAL();
 
-            // Debugging output
-            Console.WriteLine("Received StudentDTO:");
-            Console.WriteLine("StudentID: " + studentDTO.StudentId);  // This should be null or 0
-            Console.WriteLine("Firstname: " + studentDTO.Firstname);
-            Console.WriteLine("Lastname: " + studentDTO.Lastname);
-            Console.WriteLine("Username: " + studentDTO.Username);
-
             // Add the new student to the context
             _context.Students.Add(student);
             await _context.SaveChangesAsync();
@@ -57,6 +50,7 @@ namespace TodoApi.Controllers
             return student;
         }
 
+        // GET: api/Student (all Students)
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetAllStudents()
         {

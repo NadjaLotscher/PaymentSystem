@@ -32,9 +32,9 @@ namespace PaymentSystem
 
             // Configure relationship between Student and Transaction
             modelBuilder.Entity<Transaction>()
-                .HasOne(t => t.Student) // Each Transaction has one Student
-                .WithMany() // Specify the collection property in Student if exists
-                .HasForeignKey(t => t.StudentId); // Foreign key in the Transaction table
+                .HasOne(t => t.Student)
+                .WithMany()
+                .HasForeignKey(t => t.StudentId);
         }
     }
 }

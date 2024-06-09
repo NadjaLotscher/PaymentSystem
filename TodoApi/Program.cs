@@ -17,13 +17,6 @@ namespace TodoApi
             builder.Services.AddDbContext<SystemContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore-swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PaymentAPI", Version = "v1" });
-            });
-
             var app = builder.Build();
 
             using (var scope = app.Services.CreateScope())
@@ -31,13 +24,6 @@ namespace TodoApi
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<SystemContext>(); // Get the SystemContext
                 seed(context); // Pass the SystemContext to the seed method
-            }
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PaymentAPI v1"));
             }
 
             app.UseHttpsRedirection();
@@ -57,30 +43,13 @@ namespace TodoApi
             {
                 var students = new[]
                 {
-                    new Student { Firstname = "Nadja", Lastname = "Lötscher", Username = "nadjalotscher", Balance = 0, UID = "0001" },
-                    new Student { Firstname = "John", Lastname = "Doe", Username = "johndoe", Balance = 0, UID = "0001" }
+                    new Student { Firstname = "Jane", Lastname = "Doe", Username = "janedoe", Balance = 0, UID = "87" },
+                    new Student { Firstname = "John", Lastname = "Doe", Username = "johndoe", Balance = 0, UID = "91" }
                 };
 
                 context.Students.AddRange(students);
                 context.SaveChanges();
 
-                // var accounts = new[]
-                // {
-                //    new Account { StudentId = students[0].StudentId, Username = "nadjalotscher", Balance = 100.0m, IsActive = true, NumberOfCopies = 0 },
-                //    new Account { StudentId = students[1].StudentId, Username = "johndoe", Balance = 50.0m, IsActive = true, NumberOfCopies = 0 }
-                // };
-
-                // context.Accounts.AddRange(accounts);
-                context.SaveChanges();
-
-                var transactions = new[]
-                {
-                    new Transaction { StudentId = students[1].StudentId, Amount = 50.0m,  TransactionDate = DateTime.Now, },
-                    new Transaction { StudentId = students[2].StudentId, Amount = 75.0m,  TransactionDate = DateTime.Now, }
-                };
-
-                context.Transactions.AddRange(transactions);
-                context.SaveChanges();
             }
         }
     }

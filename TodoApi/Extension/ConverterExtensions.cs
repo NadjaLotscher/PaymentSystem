@@ -1,7 +1,4 @@
-﻿using PaymentSystem.Models;
-using System.Transactions;
-
-namespace WebApi.Extension
+﻿namespace WebApi.Extension
 {
     public static class ConverterExtensions
     {

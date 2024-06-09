@@ -1,9 +1,5 @@
-﻿using Azure;
-using MVC.Models;
+﻿using MVC.Models;
 using PaymentSystem.MVC.Models;
-using System.Collections.Generic;
-using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
 
 namespace MVC.Services
@@ -61,23 +57,6 @@ namespace MVC.Services
                 throw new Exception($"Failed to delete student. Error: {error}");
             }
         }
-
-
-        /*
-        public async Task<TransactionDTO> PostTransactionDTO(TransactionDTO transaction)
-        {
-            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/transaction", transaction);
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadFromJsonAsync<TransactionDTO>();
-            }
-            else
-            {
-                var error = await response.Content.ReadAsStringAsync();
-                throw new Exception($"Failed to add transaction. Error: {error}");
-            }
-        }
-        */
 
 
         public async Task<List<TransactionDTO>> GetTransactionDTOs(string username)
